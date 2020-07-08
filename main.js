@@ -5,28 +5,49 @@ function guessNumber() {
     guessesRemaining = guessesRemaining - 1;
 
     if (guessesRemaining <= 0) {
-        document.getElementById("guessesRemaining").innerHTML = 0;
-        document.getElementById("resultArea").innerHTML = `Game Over`;
+        document.getElementById('guessesRemaining').innerHTML = 0;
+        document.getElementById('resultArea').innerHTML = `Game Over`;
         return;
-    } document.getElementById("guessesRemaining").innerHTML = guessesRemaining;
+    } document.getElementById('guessesRemaining').innerHTML = guessesRemaining;
 
-    let userNumber = document.getElementById("guessingArea").value;
+    let userNumber = document.getElementById('guessingArea').value;
     console.log(userNumber, "random:", randomNumber)
     if (userNumber > randomNumber) {
-        document.getElementById("resultArea").innerHTML = `Too high`
+        document.getElementById('resultArea').innerHTML = `Too high with ${userNumber}.<br> ${guessesRemaining - 1} remaining!`
+        if (userNumber === history[history.length - 1]) {
+            alert("Same number. Try other number")
+        }
     } else if (userNumber < randomNumber) {
-        document.getElementById("resultArea").innerHTML = `Too low`
+        document.getElementById('resultArea').innerHTML = `Too low with ${userNumber}.<br> ${guessesRemaining - 1} remaining!`
+        if (userNumber === history[history.length - 1]) {
+            alert("Same number. Try other number")
+        }
     } else if (userNumber == randomNumber) {
-        document.getElementById("resultArea").innerHTML = `Correct`
+        document.getElementById('resultArea').innerHTML = `Correct`
     }
     history.push(userNumber);
     console.log(history);
-    document.getElementById("historyArea").innerHTML = `You've tried ${history}`
+    document.getElementById('historyArea').innerHTML = `You've tried ${history}`
 }
+
 
 let randomNumber = Math.floor(Math.random() * 100) + 1;
 console.log(randomNumber);
 
+
+let time = 31 // time start from 0
+let myTime; // timer will be assign to this variable
+function timecounting() {
+    myTime = setInterval(() => {
+        time = time - 1;
+
+        if (time <= 0) {
+            document.getElementById('timecount').innerHTML = 0;
+            return;
+        } document.getElementById('timecount').innerHTML = time;
+    }, 1000)// every 1 second, it will decrease 1 into time variable (computer use millisecond so 1000 is 1 second)
+}
+timecounting()// fire the timecounting function!!
 
 
 function reset() {
@@ -35,19 +56,15 @@ function reset() {
     history = []
     document.getElementById('historyArea').innerHTML = history
     document.getElementById('resultArea').innerHTML = ''
+    document.getElementById('guessingArea').value = ''
+    time = 30
+    document.getElementById('timecount').innerHTML = time
     randomNumber = Math.floor(Math.random() * 100 + 1)
     console.log(randomNumber)
 }
 
-let time = 0 // time start from 0
-let myTime; // timer will be assign to this variable
-function timecounting() {
-    myTime = setInterval(() => {
-        time += 1
-        document.getElementById('timecount').innerHTML = time
-    }, 1000)// every 1 second, it will add 1 into time variable (computer use millisecond so 1000 is 1 second)
-}
-timecounting()// fire the timecounting function!!
+
+
 
 
 
